@@ -6,7 +6,7 @@
 ![iOS](https://img.shields.io/badge/iOS-16.0%2B-black?style=flat-square&logo=appledar) 
 Los estudiantes universitarios a gestionar su estrés, rastrear sus hábitos de descanso y encontrar un espacio seguro para expresar sus emociones. 
 
-## ✨ Características Principales
+## Características Principales
 
 * ** Gamificación con Avatar Virtual:** Al registrarse, el usuario elige un compañero (Perrito o Gatito). Completar actividades saludables permite cuidar y darle regalos al avatar.
 * ** Tracker de Sueño Inteligente:** Permite registrar la calidad y horas de sueño diarias. Incluye una visualización de tendencias de los últimos 7 días usando `Swift Charts` y alertas reactivas si el descanso es deficiente.
