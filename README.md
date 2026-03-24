@@ -46,8 +46,6 @@ El `AssistantJournalView` utiliza un enumerador `ConversationContext` (`.neutral
 
 ---
 
-## Instalación y Pruebas
-
 El Asistente utiliza una máquina de estados sencilla (ConversationContext) para recordar el hilo de la conversación y ofrecer intervenciones de crisis o ejercicios de respiración basados en detección de palabras clave.
 
 Desarrollado con 🩵 por JuniorHLovers. Estudiante de Matemáticas Aplicadas y Computación (MAC) - UNAM FES Acatlán.
