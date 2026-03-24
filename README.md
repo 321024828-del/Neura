@@ -1,49 +1,52 @@
-# NEURA 🧠🌱
+# NEURA
 **Tu compañero digital para el cuidado de la salud mental.**
 
 ![Swift](https://img.shields.io/badge/Swift-5.5_or_newer-F05138?style=flat-square&logo=swift)
 ![SwiftUI](https://img.shields.io/badge/SwiftUI-Framework-blue?style=flat-square&logo=swift)
-![iOS](https://img.shields.io/badge/iOS-16.0%2B-black?style=flat-square&logo=apple)
-
-NEURA es una aplicación nativa para iOS construida con SwiftUI, diseñada específicamente para ayudar a los estudiantes universitarios a gestionar su estrés, rastrear sus hábitos de descanso y encontrar un espacio seguro para expresar sus emociones. 
+![iOS](https://img.shields.io/badge/iOS-16.0%2B-black?style=flat-square&logo=appledar) 
+Los estudiantes universitarios a gestionar su estrés, rastrear sus hábitos de descanso y encontrar un espacio seguro para expresar sus emociones. 
 
 ## ✨ Características Principales
 
-* **🔐 Onboarding y Perfiles:** Flujo completo de registro e inicio de sesión con persistencia local.
-* **🐶 Compañero Virtual:** Elige un avatar (Perrito o Gatito) que te acompañará. Alimenta y cuida a tu mascota completando hábitos saludables.
-* **📊 Tracker de Sueño Avanzado:** Registra tus horas de sueño y visualiza tu tendencia de los últimos 7 días mediante gráficos dinámicos construidos con `Swift Charts`. Incluye alertas reactivas basadas en la calidad de tu descanso.
-* **📅 Calendario de Emociones:** Un tracker visual para registrar tu estado de ánimo diario mediante emojis, guardando un historial mensual.
-* **✨ Afirmaciones Diarias:** Pantalla con animaciones fluidas (Glassmorphism) que te entrega frases motivacionales aleatorias para empezar bien el día.
-* **🤖 Asistente Conversacional Neura:** Un chat interactivo que analiza intenciones clave (ansiedad, estrés, depresión). 
-    * *Memoria de contexto:* Capacidad de hilar conversaciones cortas (ej. ofrecer un ejercicio de respiración y esperar respuesta).
-    * *Voz integrada:* Lectura de respuestas en voz alta usando `AVSpeechSynthesizer`.
-* **🆘 Centro de Ayuda:** Acceso rápido a contactos de emergencia (incluyendo atención psicológica universitaria y el 911) y guías rápidas de relajación.
+* ** Gamificación con Avatar Virtual:** Al registrarse, el usuario elige un compañero (Perrito o Gatito). Completar actividades saludables permite cuidar y darle regalos al avatar.
+* ** Tracker de Sueño Inteligente:** Permite registrar la calidad y horas de sueño diarias. Incluye una visualización de tendencias de los últimos 7 días usando `Swift Charts` y alertas reactivas si el descanso es deficiente.
+* **Calendario de Emociones:** Un registro visual del estado de ánimo diario mediante una interfaz limpia y persistencia mensual.
+* **Asistente "Neura" Integrado:** Un diario conversacional que utiliza una máquina de estados para mantener el contexto. Detecta palabras clave (estrés, ansiedad, crisis) para ofrecer ejercicios de respiración, técnicas de estudio o contactos de emergencia. Integra `AVSpeechSynthesizer` para leer las respuestas en voz alta.
+* ** Afirmaciones Diarias:** Generador de frases motivacionales con un diseño inmersivo (Glassmorphism) y fondos animados.
+* **Centro de Emergencia:** Acceso directo mediante esquemas de URL (`tel://`) a líneas de ayuda, incluyendo atención psicológica.
 
-## 🛠️ Tecnologías Utilizadas
+---
 
-* **SwiftUI:** Para toda la interfaz de usuario, animaciones (springs, gradients) y transiciones.
-* **Swift Charts:** Renderizado de la gráfica de barras del historial de sueño.
-* **AVFoundation:** Uso de `AVSpeechSynthesizer` para dotar de voz al asistente virtual.
-* **@AppStorage & Codable:** Persistencia de datos ligera (JSON) para mantener la sesión del usuario, el historial de sueño, las emociones y los puntos de cuidado del avatar.
+## Tecnologías y Frameworks Utilizados
 
-## 🚀 Instalación y Ejecución
+* **Interfaz de Usuario:** `SwiftUI` (uso intensivo de animaciones fluidas, `springs`, `LinearGradient` dinámicos y modificadores personalizados como `BounceButtonStyle`).
+* **Visualización de Datos:** `Charts` (Framework nativo de Apple) para generar gráficas de barras con `BarMark` y líneas de meta con `RuleMark`.
+* **Síntesis de Voz:** `AVFoundation` implementado en el asistente para accesibilidad auditiva.
+* **Persistencia Local:** `@AppStorage` combinado con el protocolo `Codable` y `JSONEncoder/JSONDecoder` para guardar modelos complejos (Perfil, Historial de Sueño, Emociones) directamente en `UserDefaults` de forma ligera.
 
-1. Clona este repositorio:
-   ```bash
-   git clone [https://github.com/tu-usuario/NEURA.git](https://github.com/tu-usuario/NEURA.git)
-Abre el archivo del proyecto en Xcode (requiere Xcode 14 o superior para soportar Charts).
+---
 
-Selecciona un simulador (ej. iPhone 15 Pro) o tu dispositivo físico.
+##  Arquitectura y Documentación del Código
 
-Presiona Cmd + R para compilar y ejecutar.
+El proyecto sigue una arquitectura reactiva basada en los paradigmas de SwiftUI:
 
-📱 Capturas de Pantalla
-(Nota: Agrega aquí capturas de pantalla de la app corriendo para que tu README sea más visual)
+### Enrutamiento Raíz (`ContentView`)
+La aplicación no utiliza el típico apilamiento infinito de vistas. En su lugar, `ContentView` actúa como un enrutador de estado (State-driven routing):
+1. Si no hay perfil en memoria ➔ Muestra el flujo de **Onboarding/Registro**.
+2. Si hay perfil pero no tiene avatar ➔ Muestra **AvatarSelectionView**.
+3. Si el perfil está completo ➔ Muestra el dashboard principal (**HomeAfterProfileView**).
 
-Pantalla de Onboarding | Gráfica de Sueño | Asistente Neura | Cuidado del Avatar
+### Modelos de Datos (`Models`)
+* `StudentProfile`: Estructura principal del usuario.
+* `SleepEntry` & `Mood`: Modelos identificables (`Identifiable`) para alimentar las listas y gráficas.
+* `AvatarChoice`: Enum autodescriptivo que maneja la lógica visual del compañero (íconos de SF Symbols y títulos).
 
-🧠 Arquitectura y Lógica Destacada
-El enrutamiento de la aplicación se maneja a nivel raíz en ContentView, reaccionando dinámicamente al estado del StudentProfile guardado en el dispositivo. Esto elimina problemas clásicos de navegación apilada en SwiftUI y permite transiciones asimétricas limpias entre el Onboarding, la selección de Avatar y el Home.
+### Máquina de Estados del Asistente
+El `AssistantJournalView` utiliza un enumerador `ConversationContext` (`.neutral`, `.offeredBreathing`, `.offeredCrisisHelp`) para "recordar" la intención anterior del sistema y poder procesar respuestas afirmativas o negativas de manera natural antes de seguir analizando nuevas palabras clave.
+
+---
+
+## Instalación y Pruebas
 
 El Asistente utiliza una máquina de estados sencilla (ConversationContext) para recordar el hilo de la conversación y ofrecer intervenciones de crisis o ejercicios de respiración basados en detección de palabras clave.
 
